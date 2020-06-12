@@ -8,4 +8,6 @@ Generates &amp; Checks Discord gifts, using HTTP/s Proxies and the requests pyth
 
 # Use:
 type in your desired amount of giftcodes to generate & check and wait.
-then all you need to do is, just choosing a name for the .txt file.
+then all you need to do is, just open the valid.txt file and enjoy.
+
+have fun!
