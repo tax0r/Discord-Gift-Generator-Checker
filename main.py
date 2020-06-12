@@ -1,6 +1,9 @@
 import string
 import random
 import requests
+from colorama import Fore, Back, Style
+from colorama import init
+init()
 
 codes = []
 
@@ -21,18 +24,20 @@ def generateCodes(amount):
             proxies = {
                 'https': random.choice(proxie_list)
             }
-            r = requests.get("https://discordapp.com/api/v6/entitlements/gift-codes/{}?with_application=false&with_subscription_plan=true".format(code), proxies=proxies)
+            r = requests.get("https://discordapp.com/api/v6/entitlements/gift-codes/{}?with_application=false&with_subscription_plan=true".format(code), proxies=proxies, timeout=5)
             if("Unknown Gift Code" in r.text):
-                print("[INVALID]:   Code: #" + str(x + 1) + " : " + code)
+                print(Fore.YELLOW + "[INVALID]:   Code: #" + str(x + 1) + " : " + code + " | " + "[" + proxies["https"] +"]")
             elif("You are being rate limited." in r.text):
-                print("[ERROR]:   You are getting limited, change ip or use other proxys")
+                print(Fore.RED + "[ERROR]:   You are getting limited, change ip or use other proxys | " + "[" + proxies["https"] +"]")
+                proxie_list.remove(proxies["https"])
             else:
-                print("[VALID]:   Code: #" + str(x + 1) + " : " + code)
+                print(Fore.GREEN + "[VALID]:   Code: #" + str(x + 1) + " : " + code + " | " + "[" + proxies["https"] +"]")
                 print(r.text)
                 validCodes.append(code)
-        except Exception as e:
-            print("[ERROR]:   timeout")
+        except:
+            print(Fore.RED + "[ERROR]:  Exception")
             continue
+        
     if(validCodes.count > 0):
         with open("valid.txt", "w") as validFile:
             for validCode in validCodes:
@@ -43,3 +48,5 @@ print("[IMPORTANT]:   Please only use https proxies!")
 amount = input("Amount of Codes ?:")
 
 generateCodes(int(amount))
+
+input("Press any key to close the application...")
