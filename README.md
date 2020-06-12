@@ -4,6 +4,7 @@ Generates &amp; Checks Discord gifts, using HTTP/s Proxies and the requests pyth
 # Prerequisites:
 
 - pip3 install requests
+- pip3 install colorama
 - working https proxylist
 
 # Use:
